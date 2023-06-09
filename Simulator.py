@@ -140,7 +140,11 @@ def run_simulations(sl):
     endTime = time.time()
     print(f"Done with Run {n:3.0f}, took {endTime-startTime:3.2f}s")
     if sl.saveData:
-        outputData = [sl.varValue, step]
+        outputData = [n]
+        if sl.multiLaw:
+            for value in sl.varValue:
+                outputData.append(value)
+        outputData.append(step)
         for target in swarm.environment.targets:
             outputData.append(target.numAgents)
         return outputData

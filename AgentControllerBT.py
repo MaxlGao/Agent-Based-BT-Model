@@ -3,6 +3,7 @@ from py_trees.common import Status
 from py_trees.blackboard import Blackboard
 from py_trees.decorators import Inverter, Retry, Repeat
 from py_trees.common import ParallelPolicy
+import warnings
 import numpy as np
 import random
 from Utilities import Utilities as U
@@ -22,7 +23,7 @@ class GenerateRandomWP(py_trees.behaviour.Behaviour):
     def update(self):
         # print("generating wp")
         # Generate Angle
-        angleChange = random.uniform(-np.pi, np.pi) * (1 - self.sl.smoothnessDegree)
+        angleChange = random.uniform(-1, 1) * self.sl.maxRotSpeed
         # Redefine target and adjust atTarget
         if self.targetCode == "None":
             self.currentAgent.atTarget = False
@@ -191,9 +192,9 @@ class FixWP(py_trees.behaviour.Behaviour):
                         unitVecToWall[1] * np.sin(self.currentAgent.heading)
                 )
             )
-            # direct 0.1 radians at a time.
+            # direct away.
             self.currentAgent.heading = self.currentAgent.heading + \
-                                        angleToHazard / np.abs(angleToHazard) * 0.1 * self.sl.dt
+                                        angleToHazard / np.abs(angleToHazard) * self.sl.maxRotSpeed * self.sl.dt
             if self.sl.debugEveryStep:
                 print("SUCCESS: Fixed WP")
             return Status.SUCCESS
@@ -218,9 +219,9 @@ class FixWP(py_trees.behaviour.Behaviour):
                         vecToHazard[1] * np.sin(self.currentAgent.heading)
                 ) / distToHazard
             )
-            # direct 0.2 radians at a time.
+            # direct away.
             self.currentAgent.heading = self.currentAgent.heading + \
-                                        angleToHazard / np.abs(angleToHazard) * 0.2 * self.sl.dt
+                                        angleToHazard / np.abs(angleToHazard) * self.sl.maxRotSpeed * self.sl.dt
             if self.sl.debugEveryStep:
                 print("SUCCESS: Fixed WP")
             return Status.SUCCESS
@@ -238,16 +239,19 @@ class FixWP(py_trees.behaviour.Behaviour):
 
             # also direct the agent away from the neighbor
             vecToNeighbor = threat.position - pos
-            distToNeighbor = np.linalg.norm(vecToNeighbor)
-            angleToNeighbor = np.arccos(
-                (
-                        vecToNeighbor[0] * np.cos(self.currentAgent.heading) -
-                        vecToNeighbor[1] * np.sin(self.currentAgent.heading)
-                ) / distToNeighbor
-            )
-            # direct 0.1 radians per second.
-            self.currentAgent.heading = self.currentAgent.heading + \
-                                        angleToNeighbor / np.abs(angleToNeighbor) * 0.1 * self.sl.dt
+            # distToNeighbor = np.linalg.norm(vecToNeighbor)
+            angleToNeighbor = np.arctan2(-vecToNeighbor[1], vecToNeighbor[0]) - self.currentAgent.heading
+            angleToNeighbor = (np.pi + angleToNeighbor) % (2 * np.pi) - np.pi
+            # angleToNeighbor2 = np.arccos(
+            #     (
+            #             vecToNeighbor[0] * np.cos(self.currentAgent.heading) -
+            #             vecToNeighbor[1] * np.sin(self.currentAgent.heading)
+            #     ) / distToNeighbor
+            # )
+            # direct away.
+            warnings.simplefilter('error')
+            self.currentAgent.heading = self.currentAgent.heading - \
+                                        angleToNeighbor / np.abs(angleToNeighbor) * self.sl.maxRotSpeed * self.sl.dt
             return Status.SUCCESS
 
 

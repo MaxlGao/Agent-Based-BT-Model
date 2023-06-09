@@ -74,13 +74,12 @@ class Utilities:
                     continue
 
                 diff = otherAgent.position - currentAgent.position
-                angle = np.arccos(
-                    (
-                            diff[0] * np.cos(currentAgent.heading) -
-                            diff[1] * np.sin(currentAgent.heading)
-                            # second component is negative because pygame flips y axis
-                    ) / dist
-                )
+                dotProduct = (
+                    diff[0] * np.cos(currentAgent.heading) -
+                    diff[1] * np.sin(currentAgent.heading)
+                ) / dist
+                dotProduct = max(-1, min(1, dotProduct))
+                angle = np.arccos(dotProduct)
                 if angle > sl.FOV / 2:
                     continue
                 # print(f"angle between {agentNum}, {j}: {angle:.4f}. Heading of {agentNum}: {currentAgent.heading:.4f}")

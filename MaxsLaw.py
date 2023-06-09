@@ -7,13 +7,13 @@ class MaxsLaw():
         self.SLs = None
 
         # Parameters that end up getting varied
-        self.rngSeed = 1
-        self.numAgents = 50
+        self.rngSeed = 46
+        self.numAgents = 30
         self.FOV = 2.09439
-        self.numTargets = 8
+        self.numTargets = 4
         self.hazardType = "None"
         self.propQualityTargets = 0.5
-        self.lifespan = 600
+        self.lifespan = -1
         self.visualRange = 2
         self.maxSpeed = 0.2
 
@@ -50,9 +50,9 @@ class MaxsLaw():
         self.spawnX = [12, 18]
         self.spawnY = [12, 18]
         self.agentSize = 0.3
-        self.neighborDelay = 0.5
-        self.neighborFrameSkip = self.neighborDelay / self.dt
-        self.maxNeighbors = 4
+        # self.neighborDelay = 0.5
+        # self.neighborFrameSkip = self.neighborDelay / self.dt
+        # self.maxNeighbors = 4
         self.agentColor = (0, 0, 255)
 
         # Behavior Tree Parameters
@@ -60,7 +60,8 @@ class MaxsLaw():
         self.hazardClearance = 0.5
         self.targetClearance = 1.0
         self.homeClearance = 8
-        self.smoothnessDegree = 0.9
+        # self.smoothnessDegree = 0.9
+        self.maxRotSpeed = 0.31416
         self.t_U_E = 1000  # Normal 1000
         self.t_R_Q_a = 25  # base value, normally 25
         self.t_R_Q_b = 375  # added time based on quality, normally 375
