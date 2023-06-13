@@ -1,12 +1,12 @@
 import numpy as np
 
-class MaxsLaw():
+class SimLaw():
     def __init__(self):
         # storing all the simlaws. Everything else in this page represent default values.
         # Only the one true SL shall have this cursed variable filled out.
         self.SLs = None
 
-        # Parameters that end up getting varied
+        # Parameters that end up getting varied by Multilaw
         self.rngSeed = 46
         self.numAgents = 30
         self.FOV = 2.09439
@@ -17,9 +17,12 @@ class MaxsLaw():
         self.visualRange = 2
         self.maxSpeed = 0.2
 
-        # Common Switches to Flip
-        self.multiLaw = True
+        # Common Switches to Flip:
+        # Is usage of multiLaw allowed? If so, masterScript will make use of parallel computing and forbid rendering.
+        self.multiLaw = False
+        # Provided that rendering is allowed, should supplemental elements be displayed?
         self.renderFlavor = False
+        # Should progress be printed every 100 simulation steps?
         self.printProgress = False
         if self.multiLaw:
             self.render = False
@@ -106,6 +109,7 @@ class MaxsLaw():
         # Visuals
         # Accepted values are "cross" and "triangle"
         self.agentAppearance = "triangle"
+        # pixelsPerMeter controls scaling of pygame display
         self.pixelsPerMeter = 20
         self.ppm = self.pixelsPerMeter  # shortened name, keeping old for compatibility
         self.seeAgentColor = (0, 255, 255)

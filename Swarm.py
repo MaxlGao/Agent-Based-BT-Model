@@ -6,7 +6,6 @@ from AgentControllerBT import BT
 
 
 class Swarm:
-    # Modeled after MATLAB class of the same name
     def __init__(self, sl, environment):
         # Merge Generation function with __init__
         super().__init__()
@@ -34,7 +33,6 @@ class Swarm:
         self.simulation_done = False
         self.BT_States = [None] * sl.numAgents
 
-    # saveAgentData later
     def stepSimulation(self, sl, step):
         for i in range(sl.numAgents):
             if not (self.agents[i].state == "Done" or self.agents[i].state == "Dead"):
@@ -220,7 +218,6 @@ class Swarm:
 
 
 class Agent():
-    # Modeled after Agent in MATLAB. Only contains render function.
     def __init__(self, sl):
         super().__init__()
         self.sl = sl

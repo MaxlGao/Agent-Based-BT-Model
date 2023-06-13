@@ -54,7 +54,7 @@ class Utilities:
 
     @staticmethod
     def findItem(swarm, agentNum, sl, itemType):
-        # itemType can be Agent or Target.
+        # itemType can be Agent, Target, or Hazard.
         currentAgent = swarm.agents[agentNum]
         env = swarm.environment
         numLocalAgents = 0
@@ -135,7 +135,7 @@ class Utilities:
                     (
                             diff[0] * np.cos(currentAgent.heading) -
                             diff[1] * np.sin(currentAgent.heading)
-                            # second component is negative because pygame flips y axis
+                            # second component is negative because pygame flips y-axis
                     ) / dist
                 )
                 if angle > sl.FOV / 2:

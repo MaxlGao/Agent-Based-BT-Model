@@ -2,12 +2,8 @@ import random
 import numpy as np
 import pygame.draw
 
-# from Target import Target
-from Utilities import Utilities as U
-
 
 class Environment:
-    # Analogue of ThermalMap in MATLAB
     # Class handles target locations and forbidden zones in the map.
     def __init__(self, sl):
         self.sl = sl
@@ -15,7 +11,7 @@ class Environment:
         self.numTargets = sl.numTargets
         self.width = sl.mapWidth * sl.ppm
         self.height = sl.mapHeight * sl.ppm
-        # Generate coords for all targets. Targets are either high or low quality, and their arrangement must be as
+        # Generate coordinates for all targets. Targets are either high or low quality, and their arrangement must be as
         # rotationally symmetric as possible.
         td = sl.targetDistance
         tr = sl.targetRadius
@@ -195,9 +191,6 @@ class Environment:
         screen.blit(text_ID, (self.width - 100, 0))
 
         return
-
-        # targets are static, so no step()
-        # target positions already handled, so no adjustThermalPositions
 
 class Home:
     def __init__(self, sl):

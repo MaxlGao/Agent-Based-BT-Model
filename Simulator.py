@@ -25,7 +25,6 @@ def run_simulations(sl):
         screen = pygame.display.set_mode((env.width, env.height))
         pygame.display.set_caption("Particle Simulation")
         clock = pygame.time.Clock()
-        simulation_running = False
 
         y = str(time.gmtime().tm_year)
         M = str(time.gmtime().tm_mon).zfill(2)
@@ -39,7 +38,7 @@ def run_simulations(sl):
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         video_writer = cv2.VideoWriter(video_filename, fourcc, video_fps, video_size, isColor=True)
 
-    # Mode 1: Run until Done. Dangerous for low populations.
+    # Mode 1: Run until Done. Dangerous for low populations, which take very long times to finish
     if sl.totalTime <= 0:
         step = 1
         while not swarm.simulation_done:
